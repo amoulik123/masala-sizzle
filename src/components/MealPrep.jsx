@@ -13,10 +13,12 @@ const MealPrep = ({ recipes }) => {
     }));
   }, [recipes]);
 
-  const allIngredients = new Set();
+  const ingredientCounts = {};
   weeklyPlan.forEach(plan => {
-      plan.lunch.ingredients.forEach(i => allIngredients.add(i));
-      plan.dinner.ingredients.forEach(i => allIngredients.add(i));
+      [...plan.lunch.ingredients, ...plan.dinner.ingredients].forEach(ing => {
+          if (ing === "Salt") return; // already a standard pantry staple
+          ingredientCounts[ing] = (ingredientCounts[ing] || 0) + 1;
+      });
   });
 
   return (
@@ -31,26 +33,26 @@ const MealPrep = ({ recipes }) => {
         <h3 style={{ color: 'white', fontSize: '1.8rem', marginBottom: '1.5rem' }}>🛒 The Master Shopping List</h3>
         <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Buy only what you need for the week. Since recipes are max 6 ingredients, it stays compact.</p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
-            {Array.from(allIngredients).map(ing => (
+            {Object.entries(ingredientCounts).map(([ing, count]) => (
                 <div key={ing} style={{ padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', fontSize: '0.9rem' }}>
-                    • {ing}
+                    <strong style={{ color: 'var(--accent-gold)' }}>{count}x</strong> {ing}
                 </div>
             ))}
         </div>
       </div>
 
       {/* Parallel Cooking Guide */}
-      <div className="glass" style={{ padding: '3rem', marginBottom: '5rem', border: '1px solid var(--accent-gold)' }}>
+      <div className="glass" style={{ padding: '3rem', marginBottom: '2rem', border: '1px solid var(--accent-gold)' }}>
         <h3 style={{ color: 'var(--accent-gold)', fontSize: '2rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '15px' }}>
             ⚡ Parallel Prep Guide (Sunday Routine)
         </h3>
-        <p style={{ marginBottom: '2rem', color: 'var(--text-cream)' }}>Cook your lunches for Monday through Thursday at once, in under 45 minutes.</p>
+        <p style={{ marginBottom: '2rem', color: 'var(--text-cream)' }}>Cook your lunches and dinners for Monday through Wednesday at once, in under 45 minutes.</p>
         
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
             <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '12px' }}>
                 <h4 style={{ color: 'var(--primary-red)', marginBottom: '1rem' }}>1. The Big Wash (0-10m)</h4>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                    Clean and chop all proteins. Divide them directly into your 4 meal-prep containers to save dishes.
+                    Clean and chop your first half of the proteins. Divide them directly into your meal-prep containers to save dishes.
                 </p>
             </div>
             <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '12px' }}>
@@ -62,7 +64,36 @@ const MealPrep = ({ recipes }) => {
             <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '12px' }}>
                 <h4 style={{ color: 'var(--primary-red)', marginBottom: '1rem' }}>3. The Flavor Toss (30-40m)</h4>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                    Distribute the cooked bases back to their containers. Add the specific fusion sauces/spices (e.g., Soy sauce to one, Pesto to another). Seal and fridge.
+                    Distribute the cooked bases back to their containers. Add the specific exact quantities of sauces/spices. Seal and fridge.
+                </p>
+            </div>
+        </div>
+      </div>
+
+      {/* Mid-Week Plan */}
+      <div className="glass" style={{ padding: '3rem', marginBottom: '5rem', border: '1px solid var(--primary-red)' }}>
+        <h3 style={{ color: 'var(--primary-red)', fontSize: '2rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '15px' }}>
+            🔄 Mid-Week Refresh (Wednesday Routine)
+        </h3>
+        <p style={{ marginBottom: '2rem', color: 'var(--text-cream)' }}>Cook your meals for Thursday through Sunday to keep everything tasting freshly cooked.</p>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
+            <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '12px' }}>
+                <h4 style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }}>1. The Fresh Chop (0-10m)</h4>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                    Prepare the remaining proteins from your Master Shopping List exactly as portioned.
+                </p>
+            </div>
+            <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '12px' }}>
+                <h4 style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }}>2. Quick Searing (10-25m)</h4>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                    Just like Sunday, cook all base proteins to 80% doneness on high heat to lock in moisture safely for the fridge.
+                </p>
+            </div>
+            <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '12px' }}>
+                <h4 style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }}>3. The Precision Toss (25-35m)</h4>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                    Mix in your exact calculated quantities for the fusion sauces (e.g. 2 tbsp Soy Sauce for Chinese, 1/4 cup Basil for Italian).
                 </p>
             </div>
         </div>

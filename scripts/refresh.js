@@ -3,30 +3,30 @@ import path from 'path';
 
 // Generate dynamic 500+ daily recipes for Masala Sizzle
 const proteins = [
-  { name: "Chicken Breast", type: "Chicken", kw: "chicken-breast" },
-  { name: "Chicken Thighs", type: "Chicken", kw: "chicken-thigh" },
-  { name: "Minced Chicken", type: "Chicken", kw: "minced-chicken" },
-  { name: "Mutton Mince", type: "Mutton", kw: "keema" },
-  { name: "Lamb Cubes", type: "Mutton", kw: "lamb-curry" },
-  { name: "Boiled Eggs", type: "Egg", kw: "boiled-eggs" },
-  { name: "Scrambled Eggs", type: "Egg", kw: "scrambled-eggs" },
-  { name: "Paneer Cubes", type: "Veg", kw: "paneer-tikka" }
+  { name: "500g Chicken Breast", type: "Chicken", kw: "chicken-breast", baseName: "Chicken Breast" },
+  { name: "500g Chicken Thighs", type: "Chicken", kw: "chicken-thigh", baseName: "Chicken Thighs" },
+  { name: "500g Minced Chicken", type: "Chicken", kw: "minced-chicken", baseName: "Minced Chicken" },
+  { name: "500g Mutton Mince", type: "Mutton", kw: "keema", baseName: "Mutton Mince" },
+  { name: "500g Lamb Cubes", type: "Mutton", kw: "lamb-curry", baseName: "Lamb Cubes" },
+  { name: "4 Boiled Eggs", type: "Egg", kw: "boiled-eggs", baseName: "Boiled Eggs" },
+  { name: "4 Scrambled Eggs", type: "Egg", kw: "scrambled-eggs", baseName: "Scrambled Eggs" },
+  { name: "400g Paneer Cubes", type: "Veg", kw: "paneer-tikka", baseName: "Paneer Cubes" }
 ];
 
 const flavors = [
-  { name: "Tikka", ing: ["Yogurt", "Garam Masala", "Chili"], style: "Indian", health: "High Protein", kw: "tikka-masala" },
-  { name: "Lemon Ginger", ing: ["Lemon", "Ginger", "Honey"], style: "Indian", health: "Immunity", kw: "lemon-ginger" },
-  { name: "Pepper Fry", ing: ["Black Pepper", "Curry Leaves", "Oil"], style: "Indian", health: "Keto", kw: "pepper-fry" },
-  { name: "Garlic Chili", ing: ["Soy Sauce", "Garlic", "Chilies"], style: "Indo-Chinese", health: "Metabolism", kw: "garlic-chili" },
-  { name: "Manchurian", ing: ["Spring Onion", "Vinegar", "Celery"], style: "Indo-Chinese", health: "Light", kw: "manchurian" },
-  { name: "Szechuan", ing: ["Szechuan Pepper", "Garlic", "Sesame"], style: "Indo-Chinese", health: "Zesty", kw: "szechuan" },
-  { name: "Pesto Masala", ing: ["Basil", "Olive Oil", "Walnuts"], style: "Indo-Italian", health: "Brain Food", kw: "pesto" },
-  { name: "Arrabbiata", ing: ["Tomatoes", "Oregano", "Chili Flakes"], style: "Indo-Italian", health: "Heart Healthy", kw: "arrabbiata-sauce" },
-  { name: "Alfredo Tadka", ing: ["Cream", "Black Mustard", "Garlic"], style: "Indo-Italian", health: "Comfort", kw: "creamy-alfredo" },
-  { name: "Cumin Rub", ing: ["Roasted Cumin", "Lime", "Olive Oil"], style: "Indian", health: "Digestion", kw: "cumin-roasted" },
-  { name: "Hariyali", ing: ["Mint", "Coriander", "Green Chili"], style: "Indian", health: "Fresh", kw: "mint-coriander-green" },
-  { name: "Honey Chili", ing: ["Honey", "Soy", "Chili Flakes"], style: "Indo-Chinese", health: "Energy", kw: "honey-chili" },
-  { name: "Vindaloo Tadka", ing: ["Vinegar", "Dried Chili", "Clove"], style: "Indian", health: "Spicy-Keto", kw: "spicy-vindaloo" }
+  { name: "Tikka", ing: ["2 tbsp Yogurt", "1 tbsp Garam Masala", "1 tsp Chili Powder"], style: "Indian", health: "High Protein", kw: "tikka-masala", baseIng: ["Yogurt", "Garam Masala", "Chili Powder"] },
+  { name: "Lemon Ginger", ing: ["2 tbsp Lemon Juice", "1 inch Ginger", "1 tbsp Honey"], style: "Indian", health: "Immunity", kw: "lemon-ginger", baseIng: ["Lemon Juice", "Ginger", "Honey"] },
+  { name: "Pepper Fry", ing: ["1 tbsp Black Pepper", "10 Curry Leaves", "2 tbsp Coconut Oil"], style: "Indian", health: "Keto", kw: "pepper-fry", baseIng: ["Black Pepper", "Curry Leaves", "Coconut Oil"] },
+  { name: "Garlic Chili", ing: ["2 tbsp Soy Sauce", "4 cloves Garlic", "2 Green Chilies"], style: "Indo-Chinese", health: "Metabolism", kw: "garlic-chili", baseIng: ["Soy Sauce", "Garlic", "Green Chilies"] },
+  { name: "Manchurian", ing: ["1/4 cup Spring Onion", "1 tbsp Vinegar", "1 stalk Celery"], style: "Indo-Chinese", health: "Light", kw: "manchurian", baseIng: ["Spring Onion", "Vinegar", "Celery"] },
+  { name: "Szechuan", ing: ["1 tsp Szechuan Pepper", "4 cloves Garlic", "1 tbsp Sesame Oil"], style: "Indo-Chinese", health: "Zesty", kw: "szechuan", baseIng: ["Szechuan Pepper", "Garlic", "Sesame Oil"] },
+  { name: "Pesto Masala", ing: ["1/4 cup Basil", "2 tbsp Olive Oil", "2 tbsp Walnuts"], style: "Indo-Italian", health: "Brain Food", kw: "pesto", baseIng: ["Basil", "Olive Oil", "Walnuts"] },
+  { name: "Arrabbiata", ing: ["1 cup Tomato Puree", "1 tsp Oregano", "1 tsp Chili Flakes"], style: "Indo-Italian", health: "Heart Healthy", kw: "arrabbiata-sauce", baseIng: ["Tomato Puree", "Oregano", "Chili Flakes"] },
+  { name: "Alfredo Tadka", ing: ["1/2 cup Heavy Cream", "1 tsp Black Mustard Seeds", "3 cloves Garlic"], style: "Indo-Italian", health: "Comfort", kw: "creamy-alfredo", baseIng: ["Heavy Cream", "Black Mustard Seeds", "Garlic"] },
+  { name: "Cumin Rub", ing: ["1 tbsp Roasted Cumin", "1/2 Lime", "1 tbsp Olive Oil"], style: "Indian", health: "Digestion", kw: "cumin-roasted", baseIng: ["Roasted Cumin", "Lime", "Olive Oil"] },
+  { name: "Hariyali", ing: ["1/2 cup Mint Leaves", "1/2 cup Coriander", "2 Green Chilies"], style: "Indian", health: "Fresh", kw: "mint-coriander-green", baseIng: ["Mint Leaves", "Coriander", "Green Chilies"] },
+  { name: "Honey Chili", ing: ["2 tbsp Honey", "1 tbsp Soy Sauce", "1 tsp Chili Flakes"], style: "Indo-Chinese", health: "Energy", kw: "honey-chili", baseIng: ["Honey", "Soy Sauce", "Chili Flakes"] },
+  { name: "Vindaloo Tadka", ing: ["2 tbsp Vinegar", "2 Dried Red Chilies", "4 Cloves"], style: "Indian", health: "Spicy-Keto", kw: "spicy-vindaloo", baseIng: ["Vinegar", "Dried Red Chilies", "Cloves"] }
 ];
 
 const cookingMethods = ["Pan Seared", "Slow Sautéed", "Oven Roasted", "Quick Stir-fry", "Steam Tossed", "Char-grilled"];
