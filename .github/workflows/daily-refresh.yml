@@ -1,0 +1,45 @@
+name: Daily Recipe Refresh
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run at midnight UTC every day
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  refresh-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Need write permission to commit back
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Generate Fresh Recipes
+        run: npm run refresh
+
+      - name: Commit Updated Recipes
+        run: |
+          git config --global user.name "Masala-Sizzle-Bot"
+          git config --global user.email "bot@masalasizzle.local"
+          git add src/data/recipes.json
+          git commit -m "chore: daily recipe refresh" || echo "No changes to commit"
+          git push
+
+      - name: Build Application
+        run: npm run build
+
+      # Example deployment step (e.g. to GitHub Pages)
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./dist
