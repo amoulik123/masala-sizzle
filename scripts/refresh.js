@@ -31,6 +31,15 @@ const flavors = [
 
 const cookingMethods = ["Pan Seared", "Slow Sautéed", "Oven Roasted", "Quick Stir-fry", "Steam Tossed", "Char-grilled"];
 
+const foodImageIds = [
+  "1546066123-f26059d48b53", "1604382354936-07c5d9983bd3", "1546548970-83b9ffc7ed9a",
+  "1504674900247-0877df9cc836", "1555939594-58d7cb561ad1", "1512621776951-a57141f2eefd",
+  "1543353071-10c8ba85a9ec", "1567620985472-f596fe5898c1", "1565299624946-b28f40a0ae38",
+  "1473093226795-af9932fe5856", "1493770348161-369560ae357d", "1476224203421-9ac3993557a7",
+  "1565958033581-44755106c279", "1606787366850-de6330128bfc", "1540189549341-210168f69e63",
+  "1484723091479-7c2dbaf8fc03", "1554679665-f5537f187268", "1589302168068-964664d93dc8"
+];
+
 function generateRecipes() {
   const allRecipes = [];
   let id = 1;
@@ -40,12 +49,9 @@ function generateRecipes() {
       cookingMethods.forEach(method => {
         const title = `${method} ${flavor.name} ${protein.name}`;
         
-        // Generate an exact contextual image from Pollinations.ai (Free, no-auth generative AI endpoint)
-        // By passing a specific structured prompt it always returns a high quality food photo
-        const prompt = `Professional macro food photography of ${title}, served in a dark moody restaurant setting, 8k resolution, cinematic lighting`;
-        // Using a random seed for daily variation in image style
-        const seed = Math.floor(Math.random() * 100000);
-        const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=800&height=600&seed=${seed}&nologo=true`;
+        // Use realistic Unsplash ids
+        const imageId = foodImageIds[id % foodImageIds.length];
+        const imageUrl = `https://images.unsplash.com/photo-${imageId}?auto=format&fit=crop&w=800&q=80`;
 
         allRecipes.push({
           id: id++,
