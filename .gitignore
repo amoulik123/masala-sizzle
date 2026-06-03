@@ -24,8 +24,8 @@ dist-ssr
 *.sw?
 .vercel
 
-# F1 Race Engineer data
-data/
+# F1 Race Engineer runtime lap data (root level only)
+/data/
 __pycache__/
 *.pyc
 *.pyo
