@@ -1,5 +1,5 @@
 {
-  "name": "crimson-pulsar",
+  "name": "f1-race-engineer",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "refresh": "node scripts/refresh.js"
+    "start": "bash start.sh"
   },
   "dependencies": {
     "react": "^19.2.0",

@@ -23,3 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# F1 Race Engineer data
+data/
+__pycache__/
+*.pyc
+*.pyo
